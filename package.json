@@ -1,8 +1,8 @@
 {
-  "name": "csci39",
+  "name": "csc3916_assignment1",
   "version": "1.0.0",
-  "description": "Echo App",
-  "main": "app.js",
+  "description": "simple echo server with express",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "mocha --timeout 10000 --exit"

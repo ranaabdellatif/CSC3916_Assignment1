@@ -1,19 +1,24 @@
 const express = require('express');
 const app = express();
-const port = 3000; // You can choose any port you like
+//const port = 3000; // You can choose any port you like
 
 app.use(express.json()); // To parse JSON bodies
 
 app.post('/', (req, res) => {
-  const receivedString = req.body.message; // Assuming the POST body has a 'message' field
+  const acceptHeader = req.headers['accept'];
+    res.setHeader('accept', acceptHeader);
 
-  if (receivedString) {
-    res.send(receivedString);
-  } else {
-    res.status(400).send('Please provide a message in the request body.');
-  }
-});
+    const responseBody = {
+      acceptheader: acceptHeader, 
+      ...req.body
+    }
+    res.json(responseBody)
+    });
 
-app.listen(port, () => {
-  console.log(`Echo server listening on port ${port}`);
-});
+    const port = process.env.PORT || 3000;
+    const server = app.listen(port, () => {
+      console.log('Server is running on port ${port}');
+    })
+
+  module.exports = server;
+

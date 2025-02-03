@@ -1,26 +1,30 @@
 //Require the dev-dependencies
-let chai = require('chai');
-let chaiHttp = require('chai-http');
-let server = require('../app');
-let should = chai.should();
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../app');
+const {expect} = chai;
 
 chai.use(chaiHttp);
 
-describe('Echo', () => {
-    beforeEach((done) => { //Before each
-            done();
-    });
+describe('POST', () => {
 
-    describe('/', () => {
-        it('it should POST echo', (done) => {
-            chai.request(server)
-                .post('/')
-                .send('hello world')
-                .end((err, res) => {
-                    res.should.have.status(200);
-                    res.text.should.eq('hello world');
-                    done();
-                });
-        });
+    it('should return a JSOn object with the accept header', (done) => {
+        const sampleBody = { message: "Hello, World!"};
+
+        chai 
+            .request(server)
+            .post('/')
+            .set('accept', 'application/json')
+            .send(sampleBody)
+            .end((err,response) => {
+                expect(err).to.be.null;
+                expect(response.to.have.status(200));
+                expect(response).to.be.json;
+                expect(response.body).to.have.property('message', "Hello, World!")
+                done();
+            })
+
+            });
+
+
     });
-});
